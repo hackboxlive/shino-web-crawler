@@ -8,8 +8,8 @@ def create_project(directory):
 
 #to create required data files
 def create_files(directory, base_url):
-	uncrawled_file = directory + 'uncrawled.txt'
-	crawled_file = directory + 'crawled.txt'
+	uncrawled_file = directory + '/uncrawled.txt'
+	crawled_file = directory + '/crawled.txt'
 	if not os.path.isfile(uncrawled_file):
 		write_file(uncrawled_file, base_url)
 	if not os.path.isfile(crawled_file):
@@ -22,4 +22,4 @@ def write_file(path, val):
 	writer.close()
 
 
-#create_project('hackboxlive')
+create_files('hackboxlive', 'hackboxlive.github.io')
