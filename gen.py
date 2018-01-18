@@ -21,5 +21,16 @@ def write_file(path, val):
 	writer.write(val)
 	writer.close()
 
+#Appending into file
+def append_file(path, val):
+	writer = open(path, 'a')
+	writer.write(val + '\n')
+	writer.close()
 
-create_files('hackboxlive', 'hackboxlive.github.io')
+#Deleting contents of file
+def delete_from(path):
+	writer = open(path, 'w')
+	pass
+	writer.close()
+
+delete_from('hackboxlive/uncrawled.txt')
