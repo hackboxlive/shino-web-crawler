@@ -20,7 +20,7 @@ class crawler:
 		crawler.uncrawled_file = crawler.dir_name + '/uncrawled.txt'
 		crawler.crawled_file = crawler.dir_name + '/crawled.txt'
 		self.initialize()
-		self.crawl_page('init', crawler.home_url)
+		self.crawl_page('Initial crawler', crawler.home_url)
 
 	@staticmethod
 	def initialize():
@@ -38,4 +38,18 @@ class crawler:
 			crawler.queue.remove(page_url)
 			crawler.crawled.add(page_url)
 			crawler.update_files()
-			
+
+	@staticmethod
+	def get_links_from(page_url):
+		htm_str = ''
+		try:
+			ret = urlopen(page_url)
+			if ret.getheader('Content-Type') == 'text/html':
+				temp = ret.read()
+				htm_str = temp.decode("utf-8")
+			f = scraper(crawler.home_url, crawler.page_url)
+			f.feed(htm_str)
+		except:
+			print('Error raised: could not crawl page: ' + page_url)
+			return set()
+		return f.page_links
