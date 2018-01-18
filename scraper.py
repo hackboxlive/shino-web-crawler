@@ -11,9 +11,11 @@ class scraper(HTMLParser):
 
 	def handle_starttag(self, tag, attr):
 		if tag == 'a':
-			for key,val in attr:
-				if key == 'href':
-					url = parse.urlljoin(self.base_url, val)
+			for (attribute,val) in attr:
+				if attribute == 'href':
+#					print(val)
+					url = parse.urljoin(self.home_url, val)
+#					print(url)
 					self.links.add(url)
 
 	def page_links(self):
@@ -22,5 +24,5 @@ class scraper(HTMLParser):
 	def error(self, message):
 		pass
 
-#f = scraper()
-#f.feed('<html><head><title>Test</title></head><body><h1>Parse me!</h1></body></html>')
+#f = scraper('https://www.youtube.com','https://www.youtube.com')
+#print(f.feed(''))

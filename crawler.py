@@ -1,6 +1,7 @@
 from urllib.request import urlopen
 from scraper import scraper
 from gen import *
+from domain import *
 
 class crawler:
 
@@ -35,23 +36,27 @@ class crawler:
 			print(thread_name + ' crawling ' + page_url)
 			print('Queue ' + str(len(crawler.queue)) + ' | Crawled ' + str(len(crawler.crawled)))
 			crawler.add_to_queue(crawler.get_links_from(page_url))
+			#print(crawler.queue)
 			crawler.queue.remove(page_url)
 			crawler.crawled.add(page_url)
 			crawler.update_files()
 
 	@staticmethod
 	def get_links_from(page_url):
-		htm_str = ''
+		html_string = ''
 		try:
-			ret = urlopen(page_url)
-			if ret.getheader('Content-Type') == 'text/html':
-				temp = ret.read()
-				htm_str = temp.decode("utf-8")
-			f = scraper(crawler.home_url, crawler.page_url)
-			f.feed(htm_str)
+			response = urlopen(page_url)
+			#print(page_url)
+			if 'text/html' in response.getheader('Content-Type'):
+				html_bytes = response.read()
+				html_string = html_bytes.decode("utf-8")
+			f = scraper(crawler.home_url, page_url)
+			#print(html_string)
+			f.feed(html_string)
 		except:
 			print('Error raised: could not crawl page: ' + page_url)
 			return set()
+		#print(f.page_links())
 		return f.page_links()
 	
 	@staticmethod
@@ -61,7 +66,7 @@ class crawler:
 				continue
 			if url in crawler.crawled:
 				continue
-			if crawler.domain_name not in links:
+			if crawler.domain_name not in get_domain(url):
 				continue
 			crawler.queue.add(url)
 
