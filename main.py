@@ -5,7 +5,7 @@ from domain import *
 from gen import *
 
 DIR_NAME = 'hackboxlive'
-HOME_URL = 'https://www.youtube.com'
+HOME_URL = 'https://hackboxlive.github.io'
 DOMAIN_NAME = get_domain(HOME_URL)
 UNCRAWLED_FILE = DIR_NAME + '/uncrawled.txt'
 CRAWLED_FILE = DIR_NAME + '/crawled.txt'
