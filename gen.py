@@ -33,4 +33,19 @@ def delete_from(path):
 	pass
 	writer.close()
 
-delete_from('hackboxlive/uncrawled.txt')
+#Put file into a set
+def file_to_set(file_name):
+	ret = set()
+	reader = open(file_name, 'rt')
+	for line in reader:
+		ret.add(line.replace('\n',''))
+	reader.close()
+	return ret
+
+#Put set into a file
+def set_to_file(val, file_name):
+	delete_from(file_name)
+	for link in val:
+		append_file(file_name, link)
+
+#delete_from('hackboxlive/uncrawled.txt')
