@@ -52,4 +52,20 @@ class crawler:
 		except:
 			print('Error raised: could not crawl page: ' + page_url)
 			return set()
-		return f.page_links
+		return f.page_links()
+	
+	@staticmethod
+	def add_to_queue(links):
+		for url in links:
+			if url in crawler.queue:
+				continue
+			if url in crawler.crawled:
+				continue
+			if crawler.domain_name not in links:
+				continue
+			crawler.queue.add(url)
+
+	@staticmethod
+	def update_files():
+		set_to_file(crawler.queue, crawler.uncrawled_file)
+		set_to_file(crawler.crawled, crawler.crawled_file)
